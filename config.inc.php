@@ -28,9 +28,15 @@ $i++;
 /* Authentication type */
 $cfg['Servers'][$i]['auth_type'] = 'cookie';
 /* Server parameters */
-$cfg['Servers'][$i]['host'] = $_ENV['MYSQL_HOST'];
-$cfg['Servers'][$i]['user'] = $_ENV['MYSQL_USER'];
-$cfg['Servers'][$i]['password'] = $_ENV['MYSQL_PASSWORD'];
+$cleardb_url      = parse_url(getenv("CLEARDB_DATABASE_URL"));
+$cleardb_server   = $cleardb_url["host"];
+$cleardb_username = $cleardb_url["user"];
+$cleardb_password = $cleardb_url["pass"];
+$cleardb_db       = substr($cleardb_url["path"],1);
+$cfg['Servers'][$i]['host'] = $cleardb_server;
+$cfg['Servers'][$i]['user'] = $cleardb_username;
+$cfg['Servers'][$i]['password'] = $cleardb_password;
+$cfg['Servers'][$i]['database'] = $cleardb_db;
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 
